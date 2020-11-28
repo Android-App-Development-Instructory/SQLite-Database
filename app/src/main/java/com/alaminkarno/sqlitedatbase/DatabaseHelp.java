@@ -78,4 +78,12 @@ public class DatabaseHelp extends SQLiteOpenHelper {
         return true;
 
     }
+
+    public int deleteData(int id){
+
+        SQLiteDatabase sqLiteDatabase = getWritableDatabase();
+        int check = sqLiteDatabase.delete(TABLE_NAME,COL_ID+" = ? ",new String[]{String.valueOf(id)});
+
+        return check;
+    }
 }

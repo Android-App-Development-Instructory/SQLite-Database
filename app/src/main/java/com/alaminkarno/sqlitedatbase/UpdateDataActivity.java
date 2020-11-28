@@ -68,4 +68,25 @@ public class UpdateDataActivity extends AppCompatActivity {
            }
         }
     }
+
+    public void deleteData(View view) {
+        String name = nameET.getText().toString();
+        String age = ageET.getText().toString();
+
+        if(name.isEmpty() || age.isEmpty()){
+            Toast.makeText(this, "Please Search First", Toast.LENGTH_SHORT).show();
+        }
+        else {
+            int check = databaseHelp.deleteData(Integer.parseInt(ID));
+
+            if(check>0){
+                Toast.makeText(this, "Data Deleted Successfully", Toast.LENGTH_SHORT).show();
+                nameET.setText("");
+                ageET.setText("");
+            }
+            else {
+                Toast.makeText(this, "Something went wrong.", Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
 }
