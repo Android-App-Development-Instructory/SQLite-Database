@@ -5,10 +5,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:gravity="center"
-    tools:context=".MainActivity">
+    tools:context=".UpdateDataActivity">
 
     <LinearLayout
+        android:layout_marginTop="20dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
@@ -38,7 +38,6 @@
         android:id="@+id/nameET"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Enter Name"
         android:inputType="textPersonName"
         android:layout_margin="10dp"/>
 
@@ -46,32 +45,16 @@
         android:id="@+id/ageET"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Enter Age"
         android:inputType="number"
         android:layout_margin="10dp"/>
 
 
     <Button
         android:layout_marginTop="20dp"
-        android:id="@+id/insertBTN"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Insert Data"/>
-
-    <Button
-        android:onClick="showData"
-        android:layout_marginTop="20dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Show Data"/>
-
-    <Button
         android:onClick="updateData"
-        android:layout_marginTop="20dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Update Data"/>
-
-
+        android:text="Update Data"
+        android:layout_gravity="center"/>
 
 </LinearLayout>

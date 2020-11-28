@@ -88,10 +88,14 @@ public class MainActivity extends AppCompatActivity {
                 AlertDialog alertDialog = builder.create();
                 alertDialog.show();
 
-                //Toast.makeText(this, "Name: "+name+" Age: "+age, Toast.LENGTH_SHORT).show();
+                // Toast.makeText(this, "Name: "+name+" Age: "+age, Toast.LENGTH_SHORT).show();
         }
 
         }
 
+    }
+
+    public void updateData(View view) {
+        startActivity(new Intent(MainActivity.this,UpdateDataActivity.class));
     }
 }
