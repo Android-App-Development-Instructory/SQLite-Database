@@ -58,6 +58,7 @@ public class DatabaseHelp extends SQLiteOpenHelper {
     }
 
     public Cursor searchData(int ID){
+
         String SEARCH_QUERY = "select * From "+TABLE_NAME+" where "+COL_ID+" = "+ID;
 
         SQLiteDatabase sqLiteDatabase = getReadableDatabase();

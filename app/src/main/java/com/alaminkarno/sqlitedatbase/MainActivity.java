@@ -56,6 +56,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void showData(View view) {
+
         startActivity(new Intent(MainActivity.this,ShowDataActivity.class));
     }
 
@@ -96,6 +97,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void updateData(View view) {
+
         startActivity(new Intent(MainActivity.this,UpdateDataActivity.class));
     }
 }

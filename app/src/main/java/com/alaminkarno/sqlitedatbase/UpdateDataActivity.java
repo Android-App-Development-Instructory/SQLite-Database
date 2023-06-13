@@ -29,6 +29,7 @@ public class UpdateDataActivity extends AppCompatActivity {
     }
 
     public void search(View view) {
+
         ID = searchET.getText().toString();
 
         if(ID.isEmpty()){
@@ -58,6 +59,7 @@ public class UpdateDataActivity extends AppCompatActivity {
             Toast.makeText(this, "Please Search First", Toast.LENGTH_SHORT).show();
         }
         else {
+
            boolean check = databaseHelp.updateData(Integer.parseInt(ID),name,age);
 
            if(check){
@@ -70,13 +72,16 @@ public class UpdateDataActivity extends AppCompatActivity {
     }
 
     public void deleteData(View view) {
+
         String name = nameET.getText().toString();
         String age = ageET.getText().toString();
 
         if(name.isEmpty() || age.isEmpty()){
+
             Toast.makeText(this, "Please Search First", Toast.LENGTH_SHORT).show();
         }
         else {
+
             int check = databaseHelp.deleteData(Integer.parseInt(ID));
 
             if(check>0){
@@ -85,6 +90,7 @@ public class UpdateDataActivity extends AppCompatActivity {
                 ageET.setText("");
             }
             else {
+
                 Toast.makeText(this, "Something went wrong.", Toast.LENGTH_SHORT).show();
             }
         }
