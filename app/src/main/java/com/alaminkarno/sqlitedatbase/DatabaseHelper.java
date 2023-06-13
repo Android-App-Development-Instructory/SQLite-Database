@@ -8,31 +8,34 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 import androidx.annotation.Nullable;
 
-public class DatabaseHelp extends SQLiteOpenHelper {
+public class DatabaseHelper extends SQLiteOpenHelper {
 
-    private static String DATABASE_NAME = "User.db";
-    private static String TABLE_NAME = "User";
+    private static final String DATABASE_NAME = "User.db";
+    private static final String TABLE_NAME = "User";
+    private static final int VERSION = 1;
+
+
     public static String COL_ID = "Id";
     public static String COL_NAME = "Name";
     public static String COL_AGE = "Age";
-    private static int VERSION = 1;
 
-    private String CREATE_TABLE = "create table "+TABLE_NAME+" ("+COL_ID+" Integer primary key autoincrement, "+COL_NAME+" TEXT, "+COL_AGE+" TEXT)";
 
-    public DatabaseHelp(@Nullable Context context) {
+    private final String CREATE_TABLE = "create table "+TABLE_NAME+" ("+COL_ID+" Integer primary key autoincrement, "+COL_NAME+" TEXT, "+COL_AGE+" TEXT)";
+
+    public DatabaseHelper(@Nullable Context context) {
 
         super(context, DATABASE_NAME, null, VERSION);
     }
 
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
-
         sqLiteDatabase.execSQL(CREATE_TABLE);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
-
+        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS "+TABLE_NAME);
+        onCreate(sqLiteDatabase);
     }
 
     public long insertData(String name,String age){

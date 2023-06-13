@@ -15,7 +15,7 @@ public class ShowDataActivity extends AppCompatActivity {
     RecyclerView recyclerView;
     UserAdapter adapter;
     List<User> userList;
-    DatabaseHelp databaseHelp;
+    DatabaseHelper databaseHelper;
 
 
     @Override
@@ -23,20 +23,20 @@ public class ShowDataActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_show_data);
 
-        databaseHelp = new DatabaseHelp(this);
+        databaseHelper = new DatabaseHelper(this);
         recyclerView = findViewById(R.id.dataRecyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         userList = new ArrayList<>();
         adapter = new UserAdapter(userList);
         recyclerView.setAdapter(adapter);
 
-        Cursor cursor = databaseHelp.showData();
+        Cursor cursor = databaseHelper.showData();
 
         while (cursor.moveToNext()){
 
-            int ID = cursor.getInt(cursor.getColumnIndex(databaseHelp.COL_ID));
-            String name = cursor.getString(cursor.getColumnIndex(databaseHelp.COL_NAME));
-            String age = cursor.getString(cursor.getColumnIndex(databaseHelp.COL_AGE));
+            int ID = cursor.getInt(cursor.getColumnIndex(databaseHelper.COL_ID));
+            String name = cursor.getString(cursor.getColumnIndex(databaseHelper.COL_NAME));
+            String age = cursor.getString(cursor.getColumnIndex(databaseHelper.COL_AGE));
 
             userList.add(new User(ID,name,age));
             adapter.notifyDataSetChanged();

@@ -13,7 +13,7 @@ import android.widget.Toast;
 public class UpdateDataActivity extends AppCompatActivity {
 
     EditText nameET,ageET,searchET;
-    DatabaseHelp databaseHelp;
+    DatabaseHelper databaseHelper;
     String ID;
 
     @Override
@@ -24,7 +24,7 @@ public class UpdateDataActivity extends AppCompatActivity {
         nameET = findViewById(R.id.nameET);
         ageET = findViewById(R.id.ageET);
         searchET = findViewById(R.id.searchET);
-        databaseHelp = new DatabaseHelp(this);
+        databaseHelper = new DatabaseHelper(this);
 
     }
 
@@ -36,12 +36,12 @@ public class UpdateDataActivity extends AppCompatActivity {
             Toast.makeText(this, "Enter ID for Search", Toast.LENGTH_SHORT).show();
         }
         else {
-            Cursor cursor = databaseHelp.searchData(Integer.parseInt(ID));
+            Cursor cursor = databaseHelper.searchData(Integer.parseInt(ID));
 
             while (cursor.moveToNext()){
 
-                String name = cursor.getString(cursor.getColumnIndex(databaseHelp.COL_NAME));
-                String age = cursor.getString(cursor.getColumnIndex(databaseHelp.COL_AGE));
+                String name = cursor.getString(cursor.getColumnIndex(databaseHelper.COL_NAME));
+                String age = cursor.getString(cursor.getColumnIndex(databaseHelper.COL_AGE));
 
                 nameET.setText(name);
                 ageET.setText(age);
@@ -60,7 +60,7 @@ public class UpdateDataActivity extends AppCompatActivity {
         }
         else {
 
-           boolean check = databaseHelp.updateData(Integer.parseInt(ID),name,age);
+           boolean check = databaseHelper.updateData(Integer.parseInt(ID),name,age);
 
            if(check){
                Toast.makeText(this, "Updated Successfully", Toast.LENGTH_SHORT).show();
@@ -82,7 +82,7 @@ public class UpdateDataActivity extends AppCompatActivity {
         }
         else {
 
-            int check = databaseHelp.deleteData(Integer.parseInt(ID));
+            int check = databaseHelper.deleteData(Integer.parseInt(ID));
 
             if(check>0){
                 Toast.makeText(this, "Data Deleted Successfully", Toast.LENGTH_SHORT).show();

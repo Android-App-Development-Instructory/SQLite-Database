@@ -16,7 +16,7 @@ public class MainActivity extends AppCompatActivity {
 
     EditText nameET,ageET,searchET;
     Button insertBTN;
-    DatabaseHelp databaseHelp;
+    DatabaseHelper databaseHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
         searchET = findViewById(R.id.searchET);
         insertBTN = findViewById(R.id.insertBTN);
 
-        databaseHelp = new DatabaseHelp(this);
+        databaseHelper = new DatabaseHelper(this);
 
 
         insertBTN.setOnClickListener(new View.OnClickListener() {
@@ -46,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
                 }
                 else {
 
-                   long id = databaseHelp.insertData(name,age);
+                   long id = databaseHelper.insertData(name,age);
 
                     Toast.makeText(MainActivity.this, "Data insert & ID is: "+id, Toast.LENGTH_SHORT).show();
 
@@ -68,12 +68,12 @@ public class MainActivity extends AppCompatActivity {
             Toast.makeText(this, "Enter ID for Search", Toast.LENGTH_SHORT).show();
         }
         else {
-            Cursor cursor = databaseHelp.searchData(Integer.parseInt(ID));
+            Cursor cursor = databaseHelper.searchData(Integer.parseInt(ID));
 
             while (cursor.moveToNext()){
 
-                String name = cursor.getString(cursor.getColumnIndex(databaseHelp.COL_NAME));
-                String age = cursor.getString(cursor.getColumnIndex(databaseHelp.COL_AGE));
+                String name = cursor.getString(cursor.getColumnIndex(databaseHelper.COL_NAME));
+                String age = cursor.getString(cursor.getColumnIndex(databaseHelper.COL_AGE));
 
                 AlertDialog.Builder builder = new AlertDialog.Builder(this);
                 builder.setTitle("Search Result for ID: "+ID);
