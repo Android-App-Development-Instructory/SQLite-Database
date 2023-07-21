@@ -71,8 +71,8 @@ public class MainActivity extends AppCompatActivity {
 
             while (cursor.moveToNext()){
 
-                String name = cursor.getString(cursor.getColumnIndex(databaseHelper.COL_NAME));
-                String age = cursor.getString(cursor.getColumnIndex(databaseHelper.COL_AGE));
+                String name = cursor.getString(cursor.getColumnIndexOrThrow(DatabaseHelper.COL_NAME));
+                String age = cursor.getString(cursor.getColumnIndexOrThrow(DatabaseHelper.COL_AGE));
 
                 AlertDialog.Builder builder = new AlertDialog.Builder(this);
                 builder.setTitle("Search Result for ID: "+ID);

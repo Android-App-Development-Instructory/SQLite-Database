@@ -63,9 +63,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         String SEARCH_QUERY = "select * From "+TABLE_NAME+" where "+COL_ID+" = "+ID;
 
         SQLiteDatabase sqLiteDatabase = getReadableDatabase();
-        Cursor cursor = sqLiteDatabase.rawQuery(SEARCH_QUERY,null);
+        return sqLiteDatabase.rawQuery(SEARCH_QUERY,null);
 
-        return  cursor;
     }
 
     public boolean updateData(int id,String name,String age){
