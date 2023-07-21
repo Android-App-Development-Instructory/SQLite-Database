@@ -13,12 +13,16 @@ import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.os.Environment;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import com.opencsv.CSVReader;
+
 import java.io.File;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -33,7 +37,8 @@ public class ShowDataActivity extends AppCompatActivity {
     List<User> userList;
     DatabaseHelper databaseHelper;
 
-    final static int STORAGE_REQUEST_CODE = 1;
+    final static int EXPORT_STORAGE_REQUEST_CODE = 1;
+    final static int IMPORT_STORAGE_REQUEST_CODE = 2;
 
 
     @SuppressLint("NotifyDataSetChanged")
@@ -72,13 +77,15 @@ public class ShowDataActivity extends AppCompatActivity {
         }
 
 
-        /// String csvFileName = UUID.randomUUID().toString() + "_database_backup.csv";
+         String csvFileName = "SQLite_database_backup.csv";
 
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss a");
+        // String csvFileName = UUID.randomUUID().toString() + "_database_backup.csv";
 
-        String csvFileName = "database_backup_"+simpleDateFormat.format(new Date())+".csv";
+        //SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss a");
 
-        String csvPath = csvFolder.toString()+"/"+csvFileName;
+       // String csvFileName = "database_backup_"+simpleDateFormat.format(new Date())+".csv";
+
+        String csvPath = csvFolder +"/"+csvFileName;
 
         try {
             FileWriter fileWriter = new FileWriter(csvPath);
@@ -108,12 +115,54 @@ public class ShowDataActivity extends AppCompatActivity {
 
     }
 
+    private void importCSV() {
+
+        String importPath = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS).getPath()+"/"+"SQLiteDatabase"+"/" + "SQLite_database_backup.csv";
+
+        File csvFile = new File(importPath);
+
+        if(csvFile.exists()){
+
+            try{
+                CSVReader csvReader = new CSVReader(new FileReader(csvFile.getAbsolutePath()));
+
+                String[] nextLine;
+
+                while((nextLine = csvReader.readNext()) != null){
+
+                    // String id = nextLine[0];
+                    String name = nextLine[1];
+                    String age = nextLine[2];
+
+                    long id = databaseHelper.insertData(name,age);
+
+                    Log.d("MSG",""+id);
+                }
+
+                Toast.makeText(this, "Restore Complete", Toast.LENGTH_SHORT).show();
+
+            }
+            catch (Exception e){
+                Toast.makeText(this, "Error: "+e.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+
+        }else{
+            Toast.makeText(this, "No backup file found!!", Toast.LENGTH_SHORT).show();
+        }
+
+    }
+
+
     public boolean checkStoragePermission(){
      return ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED;
     }
 
     public void requestStoragePermission(){
-        ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},STORAGE_REQUEST_CODE);
+        ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},EXPORT_STORAGE_REQUEST_CODE);
+    }
+
+    public void requestStoragePermissionForImport(){
+        ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},IMPORT_STORAGE_REQUEST_CODE);
     }
 
 
@@ -137,22 +186,37 @@ public class ShowDataActivity extends AppCompatActivity {
                 requestStoragePermission();
             }
 
-        }else if(id == R.id.menu_restore){
-            Toast.makeText(this, "Restore", Toast.LENGTH_SHORT).show();
+        }
+        else if(id == R.id.menu_restore){
+
+            if(checkStoragePermission()){
+                importCSV();
+            }
+            else{
+                requestStoragePermissionForImport();
+            }
 
         }
 
         return super.onOptionsItemSelected(item);
     }
 
+
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
 
-        if(requestCode == STORAGE_REQUEST_CODE){
+        if(requestCode == EXPORT_STORAGE_REQUEST_CODE){
             if(grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
-                // Export CSV
                 exportCSV();
+            }
+            else{
+                Toast.makeText(this, "Storage Permission Needed!", Toast.LENGTH_SHORT).show();
+            }
+        }
+        else if(requestCode == IMPORT_STORAGE_REQUEST_CODE){
+            if(grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
+                importCSV();
             }
             else{
                 Toast.makeText(this, "Storage Permission Needed!", Toast.LENGTH_SHORT).show();
