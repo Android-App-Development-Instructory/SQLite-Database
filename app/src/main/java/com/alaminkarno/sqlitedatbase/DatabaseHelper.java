@@ -74,9 +74,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         contentValues.put(COL_NAME,name);
         contentValues.put(COL_AGE,age);
         SQLiteDatabase sqLiteDatabase = getWritableDatabase();
-        sqLiteDatabase.update(TABLE_NAME,contentValues,COL_ID+" = ? ",new String[]{String.valueOf(id)});
+        return sqLiteDatabase.update(TABLE_NAME,contentValues,COL_ID+" = ? ",new String[]{String.valueOf(id)}) > 0;
 
-        return true;
 
     }
 

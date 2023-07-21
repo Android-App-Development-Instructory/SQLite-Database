@@ -40,8 +40,8 @@ public class UpdateDataActivity extends AppCompatActivity {
 
             while (cursor.moveToNext()){
 
-                String name = cursor.getString(cursor.getColumnIndex(databaseHelper.COL_NAME));
-                String age = cursor.getString(cursor.getColumnIndex(databaseHelper.COL_AGE));
+                String name = cursor.getString(cursor.getColumnIndexOrThrow(DatabaseHelper.COL_NAME));
+                String age = cursor.getString(cursor.getColumnIndexOrThrow(DatabaseHelper.COL_AGE));
 
                 nameET.setText(name);
                 ageET.setText(age);
