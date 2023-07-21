@@ -55,9 +55,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         String ALL_DATA_QUERY = "select * From "+TABLE_NAME;
 
         SQLiteDatabase sqLiteDatabase = getReadableDatabase();
-        Cursor cursor = sqLiteDatabase.rawQuery(ALL_DATA_QUERY,null);
-
-        return cursor;
+        return sqLiteDatabase.rawQuery(ALL_DATA_QUERY,null);
     }
 
     public Cursor searchData(int ID){

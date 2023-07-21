@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.annotation.SuppressLint;
 import android.database.Cursor;
 import android.os.Bundle;
 
@@ -18,6 +19,7 @@ public class ShowDataActivity extends AppCompatActivity {
     DatabaseHelper databaseHelper;
 
 
+    @SuppressLint("NotifyDataSetChanged")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,9 +36,9 @@ public class ShowDataActivity extends AppCompatActivity {
 
         while (cursor.moveToNext()){
 
-            int ID = cursor.getInt(cursor.getColumnIndex(databaseHelper.COL_ID));
-            String name = cursor.getString(cursor.getColumnIndex(databaseHelper.COL_NAME));
-            String age = cursor.getString(cursor.getColumnIndex(databaseHelper.COL_AGE));
+            int ID = cursor.getInt(cursor.getColumnIndexOrThrow(DatabaseHelper.COL_ID));
+            String name = cursor.getString(cursor.getColumnIndexOrThrow(DatabaseHelper.COL_NAME));
+            String age = cursor.getString(cursor.getColumnIndexOrThrow(DatabaseHelper.COL_AGE));
 
             userList.add(new User(ID,name,age));
             adapter.notifyDataSetChanged();
